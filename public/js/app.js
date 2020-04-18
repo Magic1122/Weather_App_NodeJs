@@ -29,24 +29,15 @@ weatherForm.addEventListener('submit', (e) => {
     searchWeather(address)
 })
 
-locationButton.addEventListener('click', () => {
+locationButton.addEventListener('click', async () => {
 
     messageOne.textContent = 'Loading...'
     messageTwo.textContent = ''
 
-    navigator.geolocation.getCurrentPosition( async (position) => {  // browser Geolocation API    
-        const longitude = await position.coords.longitude
-        const latitude = await position.coords.latitude
-
-        fetch(`/location?longitude=${longitude}&latitude=${latitude}`).then((response) => {
-            response.json().then((data) => {
-                if (data.error) {
-                    messageOne.textContent = data.error
-                } else {
-                    messageOne.textContent = `${`Your location`}.`
-                    messageTwo.textContent = `${data.forecast}`
-                }
-            })
-        })    
+    fetch(`http://ip-api.com/json/?fields=city`).then((response) => {
+        response.json().then((data) => {
+            searchWeather(data.city)
+        })
     })
 })
+
