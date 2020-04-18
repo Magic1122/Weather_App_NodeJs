@@ -81,6 +81,28 @@ app.get('/weather', (req, res) => {
     })
 })
 
+app.get('/location', (req, res) => {
+
+    if (!req.query.longitude || !req.query.latitude) {
+        return res.send({
+            error: 'Unable to fetch location from the browser!'
+        })
+    }
+
+    const { longitude, latitude } = req.query
+
+    forecast(latitude, longitude, (error, data) => {
+        if (error) {
+            return res.send({
+                error
+            })
+        }
+        res.send({
+            forecast: data
+        })
+    })
+})
+
 app.get('/products', (req, res) => {
     if (!req.query.search) {
         return res.send({                  // use return to stop the code running and don't make a double request
