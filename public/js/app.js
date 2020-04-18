@@ -34,9 +34,9 @@ locationButton.addEventListener('click', () => {
     messageOne.textContent = 'Loading...'
     messageTwo.textContent = ''
 
-    navigator.geolocation.getCurrentPosition((position) => {  // browser Geolocation API    
-        const longitude = position.coords.longitude
-        const latitude = position.coords.latitude
+    navigator.geolocation.getCurrentPosition( async (position) => {  // browser Geolocation API    
+        const longitude = await position.coords.longitude
+        const latitude = await position.coords.latitude
 
         fetch(`/location?longitude=${longitude}&latitude=${latitude}`).then((response) => {
             response.json().then((data) => {
